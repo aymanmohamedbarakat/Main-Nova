@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.css";
-import ProductCard from "../../components/Shop/ProductCard";
+import ProductCard from "../../layout/UI/ProductCard";
 import { Link } from "react-router-dom";
 import {
   Home,
@@ -40,6 +40,7 @@ export default function ShopPage() {
       setAllProducts(data);
     });
   }, [activePage, productPerPage]);
+  
   useEffect(() => {
     if (selectedCategories.length === 0) {
       setFilteredProducts(allProducts);
@@ -111,8 +112,7 @@ export default function ShopPage() {
         </div>
       </div>
 
-      {/* Mobile Category Filter */}
-
+      {/* Mobile CategoryFilter */}
       <div className="container d-md-none mb-4">
         <div className="card shadow-sm border-0">
           <div className="card-body p-0">
@@ -177,7 +177,7 @@ export default function ShopPage() {
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* MainContentShop */}
       <div className="container mb-5">
         <div className="row g-4">
           {/* Sidebar - Categories */}
@@ -229,9 +229,9 @@ export default function ShopPage() {
             </div>
           </div>
 
-          {/* Products Section */}
+          {/* ProductsSection */}
           <div className="col-md-9">
-            {/* Products Header */}
+            {/* ProductsHeader */}
             <div className="card shadow-sm border-0 mb-4">
               <div className="card-body p-3 d-flex flex-wrap justify-content-between align-items-center gap-3">
                 <div className="d-flex align-items-center">
@@ -285,7 +285,7 @@ export default function ShopPage() {
               </div>
             </div>
 
-            {/* Products Grid */}
+            {/* ProductsGrid */}
             <div className="row g-4">
               {filteredProducts &&
               Array.isArray(filteredProducts) &&
@@ -390,7 +390,6 @@ export default function ShopPage() {
                           setProductPerPage(newPageSize);
                           setActivePage(1); // Reset to first page when changing items per page
                         }}
-
                       >
                         <option value="5">5</option>
                         <option value="10">10</option>
