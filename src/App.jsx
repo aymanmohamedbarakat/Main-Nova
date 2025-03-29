@@ -3,8 +3,9 @@ import { Route, Routes } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
 import MainHeader from "./components/MainHeader";
-import MainFooter from "./components/MainFooter";
 import ShopPage from "./pages/ShopPage";
+import MainFooter from "./components/MainFooter";
+
 
 export default function App() {
   return (

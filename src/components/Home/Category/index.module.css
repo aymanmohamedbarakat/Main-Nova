@@ -10,7 +10,7 @@
       .line {
         height: 1px;
         background-color: #333;
-        width: clamp(100px, 15vw, 200px);
+        width: clamp(70px, 15vw, 200px);
       }
       .leaf {
         padding: 0 10px;

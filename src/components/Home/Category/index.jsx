@@ -3,6 +3,7 @@ import styles from "./index.module.css";
 import menCategoryImg from "../../../assets/men.jpg";
 import womenCategoryImg from "../../../assets/women.jpg";
 import childrenCategoryImg from "../../../assets/children.jpg";
+import { Link } from "react-router-dom";
 
 export default function Category() {
   const [cateSec, setCateSec] = useState([
@@ -34,8 +35,14 @@ export default function Category() {
                   className="img-fluid"
                 />
                 <div className={styles.overlay}>
-                  <h3 className={`${styles.categoryTitle} fs-5 fs-md-4`}>{el.title}</h3>
-                  <button className={`${styles.shopButton} px-3 py-2`}>Shop Now</button>
+                  <h3 className={`${styles.categoryTitle} fs-5 fs-md-4`}>
+                    {el.title}
+                  </h3>
+                  <Link to={"/shop"}>
+                    <button className={`${styles.shopButton} px-3 py-2`}>
+                      Shop Now
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
