@@ -1,42 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { ShopRepo } from "../../../../../data/repo/ShopRepo";
 
-export default function index() {
+export default function Pagination() {
   const [productsTotal, setProductsTotal] = useState(0);
   const [productPerPage, setProductPerPage] = useState(5);
   const [activePage, setActivePage] = useState(1);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  // Get Product From Api
+  useEffect(() => {
+    ShopRepo.products_index(activePage, productPerPage).then((data) => {
+      setAllProducts(data);
+      setFilteredProducts(data);
+      setProductsTotal(data.length);
+    });
+  }, [activePage, productPerPage]);
 
-    // Get Product From Api
-    useEffect(() => {
-      ShopRepo.products_index(activePage, productPerPage).then((data) => {
-        setAllProducts(data);
-        setFilteredProducts(data);
-        setProductsTotal(data.length);
-      });
-    }, [activePage, productPerPage]);
-  
-    useEffect(() => {
-      ShopRepo.products_index(activePage, productPerPage).then((data) => {
-        setAllProducts(data);
-      });
-    }, [activePage, productPerPage]);
-    
-    useEffect(() => {
-      if (selectedCategories.length === 0) {
-        setFilteredProducts(allProducts);
-        setProductsTotal(allProducts.length);
-      } else {
-        const filtered = allProducts.filter((product) =>
-          selectedCategories.includes(product.category)
-        );
-        setFilteredProducts(filtered);
-        setProductsTotal(filtered.length);
-      }
-    }, [selectedCategories, allProducts]);
-  
-    useEffect(() => {
-      setActivePage(1);
-    }, [productPerPage]);
+  useEffect(() => {
+    setActivePage(1);
+  }, [productPerPage]);
   return (
     <>
       {/* Pagination */}
@@ -104,7 +86,7 @@ export default function index() {
                   onChange={(e) => {
                     const newPageSize = parseInt(e.target.value);
                     setProductPerPage(newPageSize);
-                    setActivePage(1); // Reset to first page when changing items per page
+                    setActivePage(1);
                   }}
                 >
                   <option value="5">5</option>
