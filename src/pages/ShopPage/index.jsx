@@ -28,15 +28,15 @@ export default function ShopPage() {
 
   // Get Product From Api
   useEffect(() => {
-    console.log(
-      "Fetching products for page:",
-      activePage,
-      "with",
-      productPerPage,
-      "per page"
-    );
+    // console.log(
+    //   "Fetching products for page:",
+    //   activePage,
+    //   "with",
+    //   productPerPage,
+    //   "per page"
+    // );
     ShopRepo.products_index(activePage, productPerPage).then((result) => {
-      console.log("API Result:", result);
+      // console.log("API Result:", result);
       setAllProducts(result.data);
       setFilteredProducts(result.data);
 
@@ -44,30 +44,30 @@ export default function ShopPage() {
         setProductsTotal(result.total);
       }
 
-      console.log("Total products:", result.total);
-      console.log(
-        "Pages calculation:",
-        Math.ceil(result.total / productPerPage)
-      );
+      // console.log("Total products:", result.total);
+      // console.log(
+      //   "Pages calculation:",
+      //   Math.ceil(result.total / productPerPage)
+      // );
     });
   }, [activePage, productPerPage]);
 
   useEffect(() => {
     if (!Array.isArray(allProducts)) return;
 
-    console.log("Selected categories:", selectedCategories);
+    // console.log("Selected categories:", selectedCategories);
 
     if (selectedCategories.length === 0) {
       setFilteredProducts(allProducts);
       // استخدم productsTotal الأصلي وليس طول المصفوفة
-      console.log("Using original total:", productsTotal);
+      // console.log("Using original total:", productsTotal);
     } else {
       const filtered = allProducts.filter((product) =>
         selectedCategories.includes(product.category)
       );
       setFilteredProducts(filtered);
       setProductsTotal(filtered.length);
-      console.log("Using filtered total:", filtered.length);
+      // console.log("Using filtered total:", filtered.length);
     }
   }, [selectedCategories, allProducts]);
 
@@ -76,7 +76,7 @@ export default function ShopPage() {
       if (allProductsData && Array.isArray(allProductsData)) {
         const updatedCats = cats.map((el) => {
           const count = allProductsData.filter(
-            (product) => product.el === category.name
+            (product) => product.el === el.name
           ).length;
 
           return {
@@ -88,7 +88,7 @@ export default function ShopPage() {
         setCats(updatedCats);
       }
     });
-  }, []); // يتم تشغيله مرة واحدة فقط عند تحميل المكون
+  }, []); 
 
   useEffect(() => {
     setActivePage(1);
@@ -332,6 +332,7 @@ export default function ShopPage() {
                 filteredProducts.map((el) => (
                   <div key={el.id} className="col-12 col-sm-6 col-lg-4">
                     <ProductCard
+                      // productId={el.id}
                       title={el.title}
                       price={el.price}
                       discount_price={el.discount_price}

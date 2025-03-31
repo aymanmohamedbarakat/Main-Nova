@@ -7,7 +7,7 @@ export const indexCategories = async () => {
   try {
     const response = await axios.get(`${domain}/products?category=category`);
     
-    // Adjust based on your API response structure
+    
     final = response.data.categories;
     
   } catch (error) {

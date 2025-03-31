@@ -3,6 +3,6 @@ import { domain } from "../../store";
 
 export const getAllProducts = async () => {
   const response = await axios.get(domain + "/products");
-  console.log(response)
+  // console.log(response)
   return response.data;
 };
