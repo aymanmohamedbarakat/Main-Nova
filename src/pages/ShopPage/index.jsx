@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.css";
-import ProductCard from "../../layout/UI/ProductCard";
+import ProductCard from "../../components/ProductCard";
 import { Link } from "react-router-dom";
 import {
   Home,
@@ -36,7 +36,7 @@ export default function ShopPage() {
     //   "per page"
     // );
     ShopRepo.products_index(activePage, productPerPage).then((result) => {
-      // console.log("API Result:", result);
+      console.log("API Result:", result);
       setAllProducts(result.data);
       setFilteredProducts(result.data);
 
@@ -88,7 +88,7 @@ export default function ShopPage() {
         setCats(updatedCats);
       }
     });
-  }, []); 
+  }, []);
 
   useEffect(() => {
     setActivePage(1);
@@ -330,15 +330,13 @@ export default function ShopPage() {
               Array.isArray(filteredProducts) &&
               filteredProducts.length > 0 ? (
                 filteredProducts.map((el) => (
-                  <div key={el.id} className="col-12 col-sm-6 col-lg-4">
-                    <ProductCard
-                      // productId={el.id}
-                      title={el.title}
-                      price={el.price}
-                      discount_price={el.discount_price}
-                      imgUrl={el.image1}
-                    />
-                  </div>
+                  <ProductCard
+                    key={el.id}
+                    title={el.title}
+                    price={el.price}
+                    discount_price={el.discount_price}
+                    imgUrl={el.image1}
+                  />
                 ))
               ) : (
                 <div className="col-12">

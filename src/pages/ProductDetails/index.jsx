@@ -1,160 +1,70 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import Ring from "../../assets/Ring.png";
 import styles from "./index.module.css";
+import { useDetails } from "../../store";
 import { ShopRepo } from "../../data/repo/ShopRepo";
-
+import { useParams } from "react-router-dom";
 export default function ProductDetails() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-
-  const [productDetails, setProductDetails] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [activeImage, setActiveImage] = useState(null);
+  const params = useParams();
+  const { activeDetailsId, setActiveDetailsId } = useDetails();
+  const [productDetails, setProductDetails] = useState();
 
   useEffect(() => {
-    // Enhanced logging and error handling
-    console.log("Raw Product ID:", id)
+    console.log(params);
+  }, []);
 
-    // Validate product ID
-    if (!id || id === 'undefined') {
-      console.error("Invalid Product ID")
-      navigate('/shop')  // Redirect if no valid ID
-      return
+  useEffect(() => {
+    if (activeDetailsId) {
+      ShopRepo.productDetails(activeDetailsId).then((res) => {
+        console.log("Product details response:", res.data);
+        setProductDetails(res.data);
+      });
     }
-
-    // Fetch product details
-    setLoading(true)
-    ShopRepo.productDetails(id)
-      .then((res) => {
-        if (!res) {
-          console.error("No product details found")
-          navigate('/shop')
-          return
-        }
-        
-        console.log("Product details fetched successfully:", res)
-        setProductDetails(res)
-        setActiveImage(res.image1 || res.images?.[0])
-      })
-      .catch((error) => {
-        console.error("Error fetching product details:", error)
-        navigate('/shop')
-      })
-      .finally(() => setLoading(false))
-  }, [id, navigate])
-
-  const switchImage = (imageUrl) => {
-    setActiveImage(imageUrl);
-  };
-
-  if (loading) {
-    return (
-      <div className="container text-center py-5">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    );
-  }
-
-  if (!productDetails) {
-    return (
-      <div className="container text-center py-5">
-        <h2>Product not found</h2>
-        <p>The product could not be located.</p>
-      </div>
-    );
-  }
-
+  }, [activeDetailsId]);
   return (
     <div
-      className="container py-5 col-12 d-flex flex-column flex-lg-row justify-content-between align-items-start gap-4"
+      className="container col-12 d-flex flex-column flex-lg-row justify-content-between align-items-center"
       id={styles.productDetails}
     >
       <div className="col-12 col-lg-6" id={styles.Details}>
-        <div className="main-image mb-3">
-          <img
-            src={activeImage || productDetails.image1}
-            alt={productDetails.title}
-            className="img-fluid rounded"
-            style={{ maxHeight: "500px", width: "100%", objectFit: "cover" }}
-          />
-        </div>
-        <div className="d-flex gap-2 thumbnail-container">
-          {productDetails.image1 && (
-            <img
-              src={productDetails.image1 || "/placeholder.svg"}
-              alt="Thumbnail 1"
-              className={`img-thumbnail cursor-pointer ${
-                activeImage === productDetails.image1 ? "border-primary" : ""
-              }`}
-              style={{
-                width: "80px",
-                height: "80px",
-                objectFit: "cover",
-                cursor: "pointer",
-              }}
-              onClick={() => switchImage(productDetails.image1)}
-            />
-          )}
-          {productDetails.image2 && (
-            <img
-              src={productDetails.image2 || "/placeholder.svg"}
-              alt="Thumbnail 2"
-              className={`img-thumbnail cursor-pointer ${
-                activeImage === productDetails.image2 ? "border-primary" : ""
-              }`}
-              style={{
-                width: "80px",
-                height: "80px",
-                objectFit: "cover",
-                cursor: "pointer",
-              }}
-              onClick={() => switchImage(productDetails.image2)}
-            />
-          )}
-        </div>
+        <img
+          src={
+            productDetails?.image1 ||
+            "https://www.mobismea.com/upload/iblock/2a0/2f5hleoupzrnz9o3b8elnbv82hxfh4ld/No%20Product%20Image%20Available.png"
+          }
+          alt=""
+        />
       </div>
       <div
-        className="col-12 col-lg-6 d-flex flex-column justify-content-between gap-4"
+        className="col-12 col-lg-6 d-flex flex-column justify-content-between gap-5"
         id={styles.Details}
       >
         <div className="title">
-          <h2 className="fw-bold">{productDetails.title}</h2>
+          <h2 className="fw-bold">{productDetails?.title || "Unkwon"}</h2>
           <span className="stars fs-3" id={styles.stars}>
             ★★★★☆
           </span>
         </div>
-        <div className="category">
-          <span className="badge bg-secondary">{productDetails.category}</span>
-        </div>
         <div className="price">
-          {productDetails.discount_price < productDetails.price ? (
+          {/* {productDetails.discount_price < productDetails.price ? ( */}
             <div className="d-flex align-items-center gap-2">
               <h5 className="fs-3 text-primary mb-0">
-                ${productDetails.discount_price}
+                ${productDetails?.discount_price || "100"}
               </h5>
-              <del className="text-muted fs-5">${productDetails.price}</del>
+              <del className="text-muted fs-5">${productDetails?.price|| "200"}</del>
               <span className="badge bg-danger">
-                Save ${productDetails.price - productDetails.discount_price}
+                {/* Save ${productDetails.price - productDetails.discount_price} */}
               </span>
             </div>
-          ) : (
+          {/* ) : (
             <h5 className="fs-3">${productDetails.price}</h5>
-          )}
+          )} */}
         </div>
-        <div className="description">
-          <h6 className="fw-bold">Description</h6>
-          <p className="fs-5">{productDetails.description}</p>
-        </div>
+        <p className="fs-5">{productDetails?.description || "loream"}</p>
 
-        <div className="btn-group d-flex gap-3">
-          <button className="btn btn-primary p-3" disabled={loading}>
-            Add to Cart
-          </button>
-          <button className="btn btn-outline-secondary p-3" disabled={loading}>
-            <i className="bi bi-heart"></i> Add to Wishlist
-          </button>
+        <div className="btn-group d-flex gap-5">
+          <button className="btn btn-primary p-3">Add to Cart</button>
+          <button className="btn btn-secondary p-3">Buy Now</button>
         </div>
       </div>
     </div>

@@ -42,19 +42,7 @@ export const ShopRepo = {
     return await getAllProducts();
   },
 
-  productDetails: async (productId) => {
-    // Validate input
-    if (!productId || productId === 'undefined') {
-      console.error("Invalid Product ID");
-      return null;
-    }
-
-    try {
-      const response = await axios.get(`${domain}/products/${productId}`);
-      return response.data || null;
-    } catch (error) {
-      console.error(`Error fetching product details for ID ${productId}:`, error);
-      return null;
-    }
+  productDetails: (id) => {
+    return indexProductDetails(id);
   },
 };
