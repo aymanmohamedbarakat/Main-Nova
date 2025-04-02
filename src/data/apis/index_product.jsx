@@ -4,7 +4,8 @@ import { domain } from "../../store";
 export const indexProduct = async (page = 1, perPage = 5) => {
   // let final = [];
 
-  const response = await axios.get(domain + "/products");
+  const response = await axios.get(domain + "/products"); 
+  console.log("API Response Data:", response.data); // Log the API response data
   const allProducts = response.data;
   const total = allProducts.length;
   const startIndex = (page - 1) * perPage;
@@ -17,14 +18,6 @@ export const indexProduct = async (page = 1, perPage = 5) => {
     currentPage: page,
     perPage: perPage,
     lastPage: Math.ceil(total / perPage),
-  };
-
-  return {
-    data: [],
-    total: 0,
-    currentPage: page,
-    perPage: perPage,
-    lastPage: 0,
   };
 };
 

@@ -332,6 +332,7 @@ export default function ShopPage() {
                 filteredProducts.map((el) => (
                   <ProductCard
                     key={el.id}
+                    product_id={el.id} 
                     title={el.title}
                     price={el.price}
                     discount_price={el.discount_price}
