@@ -185,14 +185,14 @@ import SideHeader from "../SideHeader";
 
 import { FaSearch } from "react-icons/fa";
 import styles from "./index.module.css";
-import { useCart, useSideHeader } from "../../store";
+import { useCart, useSideHeader, useWishlist } from "../../store";
 
 export default function MainHeader() {
   const { index, openSideHeader } = useSideHeader();
   const { totalItems } = useCart(); // Get the cart total items count
   const [scrolled, setScrolled] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
-  
+  const { wishlistItems, isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
   // Navigation links with useState
   const [navLinks, setNavLinks] = useState([
     { id: 1, path: "/", name: "Home" },
@@ -209,7 +209,7 @@ export default function MainHeader() {
       path: "/wishlist",
       icon: <CiHeart className="fs-4 text-dark hover-icon" />,
       label: "Wishlist",
-      badge: 0,
+      badge: wishlistItems.length,  // Update this to reflect the number of items in wishlist
     },
     {
       id: 2,
@@ -235,6 +235,23 @@ export default function MainHeader() {
       )
     );
   }, [totalItems]);
+
+  useEffect(() => {
+    setIconLinks(prev =>
+      prev.map(link =>
+        link.id === 1 ? { ...link, badge: wishlistItems.length } : link  // Update badge for wishlist
+      )
+    );
+  }, [wishlistItems]);
+  
+
+  const handleWishlistClick = (product) => {
+    if (isInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {

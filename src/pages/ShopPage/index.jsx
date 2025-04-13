@@ -25,6 +25,7 @@ export default function ShopPage() {
   const [activePage, setActivePage] = useState(1);
   const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Get Product From Api
   useEffect(() => {
@@ -71,12 +72,14 @@ export default function ShopPage() {
     }
   }, [selectedCategories, allProducts]);
 
+  // إضافة تحديث الفئات بعد تحميل جميع المنتجات
   useEffect(() => {
     ShopRepo.getAllProducts().then((allProductsData) => {
       if (allProductsData && Array.isArray(allProductsData)) {
         const updatedCats = cats.map((el) => {
+          // فلترة المنتجات حسب الفئة للحصول على عدد المنتجات
           const count = allProductsData.filter(
-            (product) => product.el === el.name
+            (product) => product.category === el.name
           ).length;
 
           return {
@@ -88,7 +91,7 @@ export default function ShopPage() {
         setCats(updatedCats);
       }
     });
-  }, []);
+  }, [allProducts]); // إضافة allProducts لتحديث الفئات بعد التغيير في المنتجات
 
   useEffect(() => {
     setActivePage(1);
@@ -234,35 +237,44 @@ export default function ShopPage() {
                     type="search"
                     placeholder="Search categories"
                     className="form-control form-control-sm rounded-pill ps-4 pe-4"
+                    value={searchQuery} // قيمة البحث التي سنتابعها
+                    onChange={(e) => setSearchQuery(e.target.value)} // تحديث القيمة عند التغيير
                   />
                   <i className="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-2 text-muted small"></i>
                 </div>
                 <div className="d-flex flex-column gap-2 mt-3">
                   {cats &&
                     Array.isArray(cats) &&
-                    cats.map((el) => (
-                      <div
-                        key={el.id}
-                        className="form-check d-flex align-items-center"
-                      >
-                        <input
-                          type="checkbox"
-                          className="form-check-input me-2"
-                          id={`cat-${el.id}`}
-                          checked={selectedCategories.includes(el.name)}
-                          onChange={() => handleCategoryChange(el.name)}
-                        />
-                        <label
-                          className="form-check-label d-flex w-100 justify-content-between"
-                          htmlFor={`cat-${el.id}`}
+                    cats.map((el) => {
+                      // حساب عدد المنتجات المتوافقة مع الفئة
+                      const categoryProductCount = allProducts.filter(
+                        (product) => product.category === el.name
+                      ).length;
+
+                      return (
+                        <div
+                          key={el.id}
+                          className="form-check d-flex align-items-center"
                         >
-                          <span>{el.name}</span>
-                          <span className="badge bg-light text-dark rounded-pill">
-                            {el.products}
-                          </span>
-                        </label>
-                      </div>
-                    ))}
+                          <input
+                            type="checkbox"
+                            className="form-check-input me-2"
+                            id={`cat-${el.id}`}
+                            checked={selectedCategories.includes(el.name)}
+                            onChange={() => handleCategoryChange(el.name)}
+                          />
+                          <label
+                            className="form-check-label d-flex w-100 justify-content-between"
+                            htmlFor={`cat-${el.id}`}
+                          >
+                            <span>{el.name}</span>
+                            <span className="badge bg-light text-dark rounded-pill">
+                              {categoryProductCount}
+                            </span>
+                          </label>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
             </div>
@@ -332,7 +344,7 @@ export default function ShopPage() {
                 filteredProducts.map((el) => (
                   <ProductCard
                     key={el.id}
-                    product_id={el.id} 
+                    product_id={el.id}
                     title={el.title}
                     price={el.price}
                     discount_price={el.discount_price}
