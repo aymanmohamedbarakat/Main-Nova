@@ -53,11 +53,7 @@ import {
   getOrderDetails,
   placeOrder,
 } from "../apis/index_order";
-import {
-  registerUser,
-  loginUser,
-  verifyToken,
-} from "../apis/index_auth";
+import { registerUser, loginUser, verifyToken } from "../apis/index_auth";
 
 export const ShopRepo = {
   // Product methods
@@ -89,30 +85,53 @@ export const ShopRepo = {
   removeProductFromWishlist: async (productId) => {
     return await removeFromWishlist(productId);
   },
-  
+
   // Order methods
   getUserOrders: async () => {
     return await getUserOrders();
   },
-  
+
   getOrderDetails: async (orderId) => {
     return await getOrderDetails(orderId);
   },
-  
+
   placeOrder: async (orderData) => {
     return await placeOrder(orderData);
   },
-  
+
   // Auth methods
   register: async (userData) => {
     return await registerUser(userData);
   },
-  
+
   login: async (credentials) => {
     return await loginUser(credentials);
   },
-  
+
   verifyAuth: async () => {
     return await verifyToken();
-  }
+  },
+  // updateProfile: async (profileData) => {
+  //   try {
+  //     const token = localStorage.getItem("authToken");
+  //     if (!token) {
+  //       throw new Error("No auth token found");
+  //     }
+
+  //     const response = await axios.put(
+  //       `${domain}/update-profile`,
+  //       profileData,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+
+  //     return response.data; // البيانات بعد التحديث
+  //   } catch (error) {
+  //     console.error("Error updating profile:", error);
+  //     throw error;
+  //   }
+  // },
 };

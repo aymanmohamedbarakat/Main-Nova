@@ -951,22 +951,19 @@ export const useAuth = create((set) => ({
   updateProfile: async (profileData) => {
     set({ isLoading: true, error: null });
     try {
-      const updatedUser = await ShopRepo.updateProfile(profileData);
-      
+      const updatedUser = await ShopRepo.updateProfile(profileData); // استخدم الدالة المناسبة في الـ API
       set({
         user: updatedUser,
         isLoading: false
       });
-      
       return true;
     } catch (error) {
       set({
         isLoading: false,
-        error: error.response?.data?.message || error.message || "Failed to update profile"
+        error: error.response?.data?.message || error.message || "فشل في تحديث البيانات"
       });
       return false;
     }
   },
-  
   clearError: () => set({ error: null })
 }));

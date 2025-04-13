@@ -172,6 +172,12 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<ShopPage />} />
         <Route path="/products/:product_id" element={<ProductDetails />} />
+        <Route path="/contact" element={<h1>Contact Us</h1>} />
+        <Route path="/blog" element={<h1>Blog</h1>} />
+        <Route path="/about" element={<h1>About Us</h1>} />
+        <Route path="/account" element={<h1>Account</h1>} />
+
+        {/* Protected Routes */}
 
         <Route
           path="/cart"

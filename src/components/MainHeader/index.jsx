@@ -178,7 +178,7 @@
 
 import React, { useState, useEffect } from "react";
 import logoImg from "../../assets/Logo.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { CiHeart, CiShoppingCart, CiUser } from "react-icons/ci";
 import { IoIosMenu } from "react-icons/io";
 import SideHeader from "../SideHeader";
@@ -193,6 +193,9 @@ export default function MainHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   const { wishlistItems, isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
+  const location = useLocation();
+  const isShopPage = location.pathname === '/products';
+ 
   // Navigation links with useState
   const [navLinks, setNavLinks] = useState([
     { id: 1, path: "/", name: "Home" },
@@ -299,15 +302,12 @@ export default function MainHeader() {
           </ul>
         </nav>
 
-        {/* Search - Desktop */}
+        {isShopPage && (
         <div
-          className={`d-none d-lg-block position-relative ${
-            styles.searchContainer
-          } ${searchFocused ? styles.focused : ""}`}
-          id={``}
+          className={`d-none d-lg-block position-relative ${styles.searchContainer} ${searchFocused ? styles.focused : ""}`}
         >
           <input
-            className=" rounded-pill"
+            className="rounded-pill"
             id={styles.searchInput}
             placeholder="Search products..."
             onFocus={() => setSearchFocused(true)}
@@ -320,8 +320,10 @@ export default function MainHeader() {
             <FaSearch />
           </button>
         </div>
+      )}
 
-        {/* Search - Mobile */}
+      {/* Search - Mobile */}
+      {isShopPage && (
         <div className="container d-block d-lg-none pb-3">
           <div className="" id={styles.mobileSearchContainer}>
             <input
@@ -332,7 +334,7 @@ export default function MainHeader() {
             <button className="" id={styles.searchButton}><FaSearch /></button>
           </div>
         </div>
-
+      )}
         <div className="d-none d-md-flex">
           <ul
             className="d-flex list-unstyled m-0 p-0 gap-1"
