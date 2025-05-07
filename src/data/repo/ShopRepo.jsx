@@ -219,7 +219,7 @@ export const ShopRepo = {
       if (!token) {
         throw new Error("No auth token found");
       }
-
+      
       const response = await axios.put(
         `${domain}/update-profile`,
         profileData,
@@ -229,7 +229,6 @@ export const ShopRepo = {
           },
         }
       );
-
       return response.data;
     } catch (error) {
       console.error("Error updating profile:", error);

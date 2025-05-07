@@ -161,8 +161,11 @@ import LoginPage from "./components/LoginComponent";
 import RegisterPage from "./components/RegisterComponent";
 import MainLayout from "./layout/MainLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
-import GuestRoute from "./components/GuestRoute";
+// import GuestRoute from "./components/GuestRoute";
 import { useAuth } from "./store";
+import Contact from "./pages/Contact/Contact";
+import About from "./pages/About/About";
+import Blog from "./pages/Blog/Blog";
 
 export default function App() {
   const { checkAuth, isAuthenticated } = useAuth();
@@ -184,10 +187,9 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<ShopPage />} />
         <Route path="/products/:product_id" element={<ProductDetails />} />
-        <Route path="/contact" element={<h1>Contact Us</h1>} />
-        <Route path="/blog" element={<h1>Blog</h1>} />
-        <Route path="/about" element={<h1>About Us</h1>} />
-        <Route path="/account" element={<h1>Account</h1>} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/about" element={<About />} />
 
         {/* Protected Routes */}
 
@@ -221,18 +223,18 @@ export default function App() {
         <Route
           path="/order-confirmation/:orderId"
           element={
-            <ProtectedRoute>
+
               <OrderConfirmationPage />
-            </ProtectedRoute>
+
           }
         />
 
         <Route
           path="/orders"
           element={
-            <ProtectedRoute>
+
               <OrderConfirmationPage />
-            </ProtectedRoute>
+
           }
         />
       </Route>
@@ -241,18 +243,18 @@ export default function App() {
       <Route
         path="/login"
         element={
-          <GuestRoute>
+          // <GuestRoute>
             <LoginPage />
-          </GuestRoute>
+          // </GuestRoute> 
         }
       />
 
       <Route
         path="/register"
         element={
-          <GuestRoute>
+          // <GuestRoute>
             <RegisterPage />
-          </GuestRoute>
+          // </GuestRoute> 
         }
       />
 

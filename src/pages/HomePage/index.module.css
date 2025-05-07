@@ -1,6 +1,195 @@
-#Banner{
+/* #Banner{
     img{
         width: 100%;
-        object-fit: contain;
+        height: 300px;
+        object-fit: cover;
     }
-}
+} */
+
+
+.heroBanner {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    margin-bottom: 30px;
+  }
+  
+  .heroBanner img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .heroBanner:hover img {
+    transform: scale(1.05);
+  }
+  
+  .bannerOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.1) 100%);
+    display: flex;
+    align-items: center;
+  }
+  
+  .bannerContent {
+    padding-left: 10%;
+    max-width: 600px;
+    color: white;
+  }
+  
+  .bannerHeading {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .bannerSubheading {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+  
+  .bannerButton {
+    background-color: var(--gold, #c1b17e);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .bannerButton:hover {
+    background-color: #a69868;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Feature Boxes */
+  .featureBoxes {
+    margin-bottom: 30px;
+  }
+  
+  .featureBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    height: 100%;
+  }
+  
+  .featureBox:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .featureBox i {
+    font-size: 2rem;
+    color: var(--gold, #c1b17e);
+    margin-bottom: 15px;
+  }
+  
+  .featureBox h3 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  .featureBox p {
+    margin: 0;
+    color: #6c757d;
+  }
+  
+  /* Newsletter Section */
+  .newsletterSection {
+    background-color: #f8f9fa;
+    width: 100%;
+    padding: 40px 0;
+    margin-top: 30px;
+  }
+  
+  .newsletterHeading {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #212529;
+  }
+  
+  .newsletterText {
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin-bottom: 25px;
+  }
+  
+  .subscribeForm {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 500px;
+  }
+  
+  .emailInput {
+    flex: 1;
+    padding: 12px 20px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px 0 0 4px;
+    font-size: 1rem;
+  }
+  
+  .subscribeButton {
+    background-color: var(--gold, #c1b17e);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .subscribeButton:hover {
+    background-color: #a69868;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .bannerContent {
+      padding-left: 5%;
+      padding-right: 5%;
+    }
+    
+    .subscribeForm {
+      flex-direction: column;
+      width: 90%;
+    }
+    
+    .emailInput, 
+    .subscribeButton {
+      width: 100%;
+      border-radius: 4px;
+    }
+    
+    .emailInput {
+      margin-bottom: 10px;
+    }
+  }

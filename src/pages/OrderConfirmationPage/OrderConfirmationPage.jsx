@@ -10,6 +10,19 @@ export default function OrderConfirmationPage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // const fetchOrderDetails = async () => {
+    //   try {
+    //     setIsLoading(true);
+    //     const orderData = await ShopRepo.getOrderDetails(orderId);
+    //     setOrder(orderData);
+    //   } catch (err) {
+    //     console.error("Error fetching order details:", err);
+    //     setError("Failed to load order details. Please try again later.");
+    //     toast.error("Could not load order information");
+    //   } finally {
+    //     setIsLoading(false);
+    //   }
+    // };
     const fetchOrderDetails = async () => {
       try {
         setIsLoading(true);
@@ -17,28 +30,33 @@ export default function OrderConfirmationPage() {
         setOrder(orderData);
       } catch (err) {
         console.error("Error fetching order details:", err);
-        setError("Failed to load order details. Please try again later.");
-        toast.error("Could not load order information");
+        // Try to get from localStorage as fallback
+        const lastOrderData = localStorage.getItem('lastOrderData');
+        if (lastOrderData) {
+          setOrder(JSON.parse(lastOrderData));
+        } else {
+          setError("Failed to load order details. Please try again later.");
+          toast.error("Could not load order information");
+        }
       } finally {
         setIsLoading(false);
       }
     };
-
     if (orderId) {
       fetchOrderDetails();
     }
   }, [orderId]);
 
-  if (isLoading) {
-    return (
-      <div className="container py-5 text-center">
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-        <p className="mt-3">Loading order details...</p>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="container py-5 text-center">
+  //       <div className="spinner-border text-primary" role="status">
+  //         <span className="visually-hidden">Loading...</span>
+  //       </div>
+  //       <p className="mt-3">Loading order details...</p>
+  //     </div>
+  //   );
+  // }
 
   if (error) {
     return (
